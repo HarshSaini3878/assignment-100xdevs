@@ -1,0 +1,66 @@
+/* Basic styles */
+.table-container {
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+    overflow-x: auto; /* Scroll horizontally on small screens */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  /* Table Headers */
+  thead th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 1.1em;
+  }
+  
+  /* Table rows */
+  tbody td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Alternate row colors */
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Responsive design */
+  @media only screen and (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+  
+    /* Hide the table headers for small screens */
+    thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+  
+    /* Each cell as its own row */
+    tr {
+      margin-bottom: 10px;
+    }
+  
+    td {
+      position: relative;
+      padding-left: 50%;
+    }
+  
+    /* Label the cells using pseudo-elements */
+    td:before {
+      content: attr(data-label);
+      position: absolute;
+      left: 10px;
+      font-weight: bold;
+    }
+  }
+  

@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Home.css'; // Importing CSS for form styling
-import { useContext } from 'react';
 import { AppContext } from '../AppContext.jsx';
+
+// Optional: Create a separate component for displaying error messages
+const ErrorMessage = ({ message }) => (
+  <span className="error">{message}</span>
+);
+
 function Home() {
-    const {updateData } = useContext(AppContext);
+  const { data,updateData } = useContext(AppContext);
   const [formData, setFormData] = useState({
     petName: '',
     petType: '',
@@ -43,11 +48,10 @@ function Home() {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      // Submit form
-      console.log(formData);
-      // Reset form
+      // Update context with form data
       updateData(formData);
-      
+      console.log(data)
+      // Reset form data after successful submission
       setFormData({
         petName: '',
         petType: '',
@@ -56,6 +60,7 @@ function Home() {
         email: '',
         phone: '',
       });
+      setErrors({}); // Reset errors
     } else {
       setErrors(validationErrors);
     }
@@ -65,69 +70,19 @@ function Home() {
     <div className="form-container">
       <h2>Pet Registration Form</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Pet Name:</label>
-          <input
-            type="text"
-            name="petName"
-            value={formData.petName}
-            onChange={handleChange}
-          />
-          {errors.petName && <span className="error">{errors.petName}</span>}
-        </div>
-        <div className="form-group">
-          <label>Pet Type:</label>
-          <input
-            type="text"
-            name="petType"
-            value={formData.petType}
-            onChange={handleChange}
-          />
-          {errors.petType && <span className="error">{errors.petType}</span>}
-        </div>
-        <div className="form-group">
-          <label>Breed:</label>
-          <input
-            type="text"
-            name="breed"
-            value={formData.breed}
-            onChange={handleChange}
-          />
-          {errors.breed && <span className="error">{errors.breed}</span>}
-        </div>
-        <div className="form-group">
-          <label>Your Name:</label>
-          <input
-            type="text"
-            name="yourName"
-            value={formData.yourName}
-            onChange={handleChange}
-          />
-          {errors.yourName && <span className="error">{errors.yourName}</span>}
-        </div>
-        <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && <span className="error">{errors.email}</span>}
-        </div>
-        <div className="form-group">
-          <label>Phone:</label>
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-          />
-          {errors.phone && <span className="error">{errors.phone}</span>}
-        </div>
+        {Object.keys(formData).map((key) => (
+          <div className="form-group" key={key}>
+            <label>{`${key.charAt(0).toUpperCase() + key.slice(1)}:`}</label>
+            <input
+              type={key === 'email' ? 'email' : key === 'phone' ? 'tel' : 'text'}
+              name={key}
+              value={formData[key]}
+              onChange={handleChange}
+            />
+            {errors[key] && <ErrorMessage message={errors[key]} />}
+          </div>
+        ))}
         <button type="submit">Submit</button>
-        
-   
       </form>
     </div>
   );

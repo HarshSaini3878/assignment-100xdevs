@@ -3,6 +3,7 @@ import './App.css'; // Import your CSS file here
 import React, { useState } from 'react';
 import Home from "./components/Home";
 import { AppProvider } from './AppContext';
+import Table from "./components/Table";
 function App() {
   
   return (
@@ -12,7 +13,7 @@ function App() {
         {/* Layout Route */}
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="table" element={<About />} />
+          <Route path="table" element={<Table />} />
         </Route>
       </Routes>
     </BrowserRouter>
@@ -32,8 +33,5 @@ function Layout() {
 }
 
 
-function About() {
-  return <h2>About Us</h2>;
-}
 
 export default App;

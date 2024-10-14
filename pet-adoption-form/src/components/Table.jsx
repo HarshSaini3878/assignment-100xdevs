@@ -1,8 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppContext } from '../AppContext.jsx';
+import './Table.css'
 
 function Table() {
   const { data } = useContext(AppContext); // Getting data from context
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <div className="table-container">

@@ -1,20 +1,9 @@
-import * as React from 'react'
-import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
-
-import { ChakraProvider } from '@chakra-ui/react'
-
 function App() {
- const [data,setData]=useState([]);
   return (
-    <ChakraProvider>
-   
-    </ChakraProvider>
-  )
-}
-function Layout(){
-  return (
-    <div>
-      
+    <div className="flex h-screen bg-gradient-to-r from-green-400 to-blue-500 items-center justify-center">
+      <h1 className="text-white text-4xl font-bold">Welcome to My Home App</h1>
     </div>
-  )
+  );
 }
+
+export default App;

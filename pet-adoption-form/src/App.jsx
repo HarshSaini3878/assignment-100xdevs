@@ -2,22 +2,21 @@ import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 import './App.css'; // Import your CSS file here
 import React, { useState } from 'react';
 import Home from "./components/Home";
-import { AppProvider } from './AppContext';
 import Table from "./components/Table";
+
 function App() {
-  
+  const [data, setData] = useState([]); // Initialize as an empty array
+
   return (
-    <AppProvider>
     <BrowserRouter>
       <Routes>
         {/* Layout Route */}
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="table" element={<Table />} />
+          <Route path="/" element={<Home setdata={setData} data={data} />} />
+          <Route path="table" element={<Table data={data} />} />
         </Route>
       </Routes>
     </BrowserRouter>
-    </AppProvider>
   );
 }
 
@@ -31,7 +30,5 @@ function Layout() {
     </div>
   );
 }
-
-
 
 export default App;

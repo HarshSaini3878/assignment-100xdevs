@@ -1,12 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import { AppContext } from '../AppContext.jsx';
-import './Table.css'
+import React, { useEffect } from 'react';
+import './Table.css';
 
-function Table() {
-  const { data } = useContext(AppContext); // Getting data from context
+function Table({ data }) {
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    console.log("Updated data in Table:", data);
+  }, [data]); // This will log when `data` updates
 
   return (
     <div className="table-container">
@@ -22,7 +20,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.length > 0 ? (
+          {data && data.length > 0 ? (
             data.map((item, index) => (
               <tr key={index}>
                 <td>{item.petName}</td>

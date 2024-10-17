@@ -1,14 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css'; // Importing CSS for form styling
-import { AppContext } from '../AppContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
-// Optional: Create a separate component for displaying error messages
 const ErrorMessage = ({ message }) => (
   <span className="error">{message}</span>
 );
 
-function Home() {
-  const { data,updateData } = useContext(AppContext);
+function Home({ setdata, data }) {
+  // Log data whenever it changes
+  const navigate = useNavigate(); // Use navigate to go to the Table component
+  useEffect(() => {
+    console.log("Updated Data in Home:", data);
+  }, [data]);
+
   const [formData, setFormData] = useState({
     petName: '',
     petType: '',
@@ -48,10 +52,12 @@ function Home() {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      // Update context with form data
-      updateData(formData);
-      console.log(data)
+      // Update data state
+      setdata((prev) => [...prev, formData]);
+      console.log("Data after submit:", [...data, formData]); // To debug if data is updating
+      
       // Reset form data after successful submission
+      navigate('/table'); 
       setFormData({
         petName: '',
         petType: '',
@@ -60,7 +66,9 @@ function Home() {
         email: '',
         phone: '',
       });
+
       setErrors({}); // Reset errors
+      
     } else {
       setErrors(validationErrors);
     }
